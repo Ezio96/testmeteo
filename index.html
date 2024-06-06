@@ -3,66 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G2raphique de température</title>
-    <!-- Inclure Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <!-- Inclure Chart.js -->
+    <title>Graphique aléatoire</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <canvas id="temperatureChart"></canvas>
+    <canvas id="randomChart"></canvas>
 
     <script>
-        // Données de température
-        const temperatureData = [
-            { date: '2010-01-01', temperature: 2.3 },
-            { date: '2010-01-02', temperature: 1.8 },
-            { date: '2010-01-03', temperature: 1.2 },
-            { date: '2010-01-04', temperature: 2.3 },
-            { date: '2010-01-05', temperature: 1.8 },
-            { date: '2010-01-06', temperature: 1.2 },
-            { date: '2010-01-07', temperature: 2.3 },
-            { date: '2010-01-08', temperature: 1.8 },
-            { date: '2010-01-09', temperature: 5.2 },
-            { date: '2010-01-10', temperature: 2.3 },
-            { date: '2010-01-11', temperature: 4.8 },
-            { date: '2010-01-12', temperature: 4.2 },
-            { date: '2010-01-13', temperature: 6.3 },
-            { date: '2010-01-14', temperature: 2.8 },
-            { date: '2010-01-15', temperature: 7.2 }
-        ];
+        // Générer des données aléatoires
+        const randomData = Array.from({ length: 10 }, () => ({
+            x: Math.random() * 10,
+            y: Math.random() * 10
+        }));
 
         // Créer le graphique avec Chart.js
-        const ctx = document.getElementById('temperatureChart').getContext('2d');
+        const ctx = document.getElementById('randomChart').getContext('2d');
         new Chart(ctx, {
-            type: 'line',
+            type: 'scatter',
             data: {
-                labels: temperatureData.map(data => data.date),
                 datasets: [{
-                    label: 'Température (°C)',
-                    data: temperatureData.map(data => data.temperature),
+                    label: 'Points aléatoires',
+                    data: randomData,
+                    backgroundColor: 'rgba(75, 192, 192, 1)',
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    fill: false
+                    borderWidth: 1
                 }]
             },
             options: {
                 scales: {
                     x: {
-                        type: 'time',
-                        time: {
-                            parser: 'YYYY-MM-DD',
-                            tooltipFormat: 'll',
-                            unit: 'day',
-                            displayFormats: {
-                                day: 'MMM DD'
-                            }
-                        },
-                        // Spécifier Moment.js comme adaptateur de date
-                        adapter: 'moment'
+                        type: 'linear',
+                        position: 'bottom',
+                        min: 0,
+                        max: 10
                     },
                     y: {
-                        beginAtZero: true
+                        type: 'linear',
+                        min: 0,
+                        max: 10
                     }
                 }
             }
