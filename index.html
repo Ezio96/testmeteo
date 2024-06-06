@@ -17,7 +17,7 @@
         const randomData = Array.from({ length: 50 }, () => ({
             x: Math.random() * 10,
             y: Math.random() * 10,
-            color: `rgba(${255 - Math.floor((Math.abs(10 - Math.random() * 20)) * 25.5)}, 0, ${Math.floor((Math.abs(10 - Math.random() * 20)) * 25.5)}, 1)` // Variation de couleur du bleu au rouge en fonction de l'abscisse
+            color: `rgba(${255 - Math.floor(Math.abs(10 - Math.random() * 20) * 25.5)}, 0, ${Math.floor(Math.abs(10 - Math.random() * 20) * 25.5)}, 1)` // Variation de couleur du rouge au bleu en fonction de l'abscisse
         }));
 
         // Créer le graphique avec Chart.js
