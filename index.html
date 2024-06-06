@@ -18,10 +18,10 @@
             height: 50%; /* Prend la moitié de la hauteur de la page */
         }
         h1 {
-            font-size: 36px; /* Taille du titre augmentée */
+            font-size: 108px; /* Taille du titre augmentée trois fois */
         }
         .chartjs-title {
-            font-size: 24px; /* Taille de la légende augmentée */
+            font-size: 72px; /* Taille de la légende augmentée trois fois */
         }
     </style>
 </head>
@@ -31,10 +31,11 @@
     </div>
 
     <script>
-        // Générer des données aléatoires
-        const randomData = Array.from({ length: 10 }, () => ({
+        // Générer des données aléatoires avec des couleurs
+        const randomData = Array.from({ length: 50 }, () => ({
             x: Math.random() * 10,
-            y: Math.random() * 10
+            y: Math.random() * 10,
+            backgroundColor: `rgba(${255 * (Math.random() * 0.1)}, 0, ${255 * (1 - Math.random() * 0.1)}, 1)` // Variation de couleur du bleu au rouge
         }));
 
         // Créer le graphique avec Chart.js
@@ -45,7 +46,7 @@
                 datasets: [{
                     label: 'Points aléatoires',
                     data: randomData,
-                    backgroundColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: randomData.map(data => data.backgroundColor), // Couleurs aléatoires
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
                 }]
