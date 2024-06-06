@@ -5,30 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphique</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        #graphContainer {
-            width: 50%; /* Prend la moitié de la largeur de la page */
-            height: 50%; /* Prend la moitié de la hauteur de la page */
-        }
-        h1 {
-            font-size: 400%; /* Taille du titre augmentée trois fois */
-            text-transform: uppercase; /* Convertir le texte en majuscules */
-        }
-        .chartjs-title {
-            font-size: 400%; /* Taille de la légende augmentée trois fois */
-            text-transform: uppercase; /* Convertir le texte en majuscules */
-        }
-    </style>
 </head>
 <body>
-    <div id="graphContainer">
+    <div id="graphContainer" style="width: 50%; height: 50%;">
+        <h1 style="font-size: 3rem; text-transform: uppercase;">Graphique</h1>
         <canvas id="randomChart"></canvas>
     </div>
 
