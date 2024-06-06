@@ -7,8 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div id="graphContainer" style="width: 70%; height: 70%;">
-        <h1 style="font-size: 5rem; text-transform: uppercase;">Graphique</h1>
+    <div id="graphContainer" style="width: 50%; height: 50%;">
+        <h1 style="font-size: 3rem; text-transform: uppercase;">Graphique</h1>
         <canvas id="randomChart"></canvas>
     </div>
 
@@ -17,7 +17,7 @@
         const randomData = Array.from({ length: 50 }, () => ({
             x: Math.random() * 10,
             y: Math.random() * 10,
-            backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, 0, ${Math.floor(Math.random() * 256)}, 1)`, // Variation de couleur du bleu au rouge
+            color: `rgba(${255 - Math.floor((Math.abs(10 - Math.random() * 20)) * 25.5)}, 0, ${Math.floor((Math.abs(10 - Math.random() * 20)) * 25.5)}, 1)` // Variation de couleur du bleu au rouge en fonction de l'abscisse
         }));
 
         // Créer le graphique avec Chart.js
@@ -28,7 +28,7 @@
                 datasets: [{
                     label: 'Points aléatoires',
                     data: randomData,
-                    backgroundColor: randomData.map(data => data.backgroundColor), // Couleurs aléatoires
+                    backgroundColor: randomData.map(data => data.color), // Couleur des points dynamique
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
                     pointStyle: 'circle', // Forme des points
