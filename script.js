@@ -4,7 +4,7 @@ const temperatureData = [
     { date: '2010-01-03', temperature: 1.2 },
     { date: '2010-01-04', temperature: 2.3 },
     { date: '2010-01-05', temperature: 1.8 },
-    { date: '2010-01-06, temperature: 1.2 },
+    { date: '2010-01-06', temperature: 1.2 },
     { date: '2010-01-07', temperature: 2.3 },
     { date: '2010-01-08', temperature: 1.8 },
     { date: '2010-01-09', temperature: 5.2 },
