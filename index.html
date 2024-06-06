@@ -3,11 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphique aléatoire</title>
+    <title>Graphique</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #graphContainer {
+            width: 50%; /* Prend la moitié de la largeur de la page */
+            height: 50%; /* Prend la moitié de la hauteur de la page */
+        }
+        h1 {
+            font-size: 36px; /* Taille du titre augmentée */
+        }
+        .chartjs-title {
+            font-size: 24px; /* Taille de la légende augmentée */
+        }
+    </style>
 </head>
 <body>
-    <canvas id="randomChart"></canvas>
+    <div id="graphContainer">
+        <canvas id="randomChart"></canvas>
+    </div>
 
     <script>
         // Générer des données aléatoires
