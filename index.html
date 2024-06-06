@@ -17,7 +17,8 @@
         const randomData = Array.from({ length: 50 }, () => ({
             x: Math.random() * 10,
             y: Math.random() * 10,
-            backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, 0, ${Math.floor(Math.random() * 256)}, 1)` // Variation de couleur du bleu au rouge
+            backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, 0, ${Math.floor(Math.random() * 256)}, 1)`, // Variation de couleur du bleu au rouge
+            pointRadius: 10 // Taille des points
         }));
 
         // Créer le graphique avec Chart.js
@@ -30,7 +31,8 @@
                     data: randomData,
                     backgroundColor: randomData.map(data => data.backgroundColor), // Couleurs aléatoires
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    pointStyle: 'circle' // Forme des points
                 }]
             },
             options: {
@@ -51,7 +53,7 @@
                     legend: {
                         labels: {
                             font: {
-                                size: 24 // Taille de police de la légende
+                                size: 48 // Taille de police de la légende
                             }
                         }
                     }
