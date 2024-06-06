@@ -48,7 +48,12 @@
                     x: {
                         type: 'time',
                         time: {
-                            unit: 'day'
+                            parser: 'YYYY-MM-DD',
+                            tooltipFormat: 'll',
+                            unit: 'day',
+                            displayFormats: {
+                                day: 'MMM DD'
+                            }
                         }
                     },
                     y: {
