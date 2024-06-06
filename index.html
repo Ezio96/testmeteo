@@ -3,18 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonsoir</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 300vh;
-            margin: 0;
-        }
-    </style>
+    <title>Graphique aléatoire</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Bonjour</h1>
+    <canvas id="randomChart"></canvas>
+
+    <script>
+        // Générer des données aléatoires
+        const randomData = Array.from({ length: 10 }, () => ({
+            x: Math.random() * 10,
+            y: Math.random() * 10
+        }));
+
+        // Créer le graphique avec Chart.js
+        const ctx = document.getElementById('randomChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Points aléatoires',
+                    data: randomData,
+                    backgroundColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        min: 0,
+                        max: 10
+                    },
+                    y: {
+                        type: 'linear',
+                        min: 0,
+                        max: 10
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
