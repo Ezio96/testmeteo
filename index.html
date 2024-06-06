@@ -19,9 +19,11 @@
         }
         h1 {
             font-size: 108px; /* Taille du titre augmentée trois fois */
+            text-transform: uppercase; /* Convertir le texte en majuscules */
         }
         .chartjs-title {
-            font-size: 72px; /* Taille de la légende augmentée trois fois */
+            font-size: 108px; /* Taille de la légende augmentée trois fois */
+            text-transform: uppercase; /* Convertir le texte en majuscules */
         }
     </style>
 </head>
@@ -35,7 +37,7 @@
         const randomData = Array.from({ length: 50 }, () => ({
             x: Math.random() * 10,
             y: Math.random() * 10,
-            backgroundColor: `rgba(${255 * (Math.random() * 0.1)}, 0, ${255 * (1 - Math.random() * 0.1)}, 1)` // Variation de couleur du bleu au rouge
+            backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, 0, ${Math.floor(Math.random() * 256)}, 1)` // Variation de couleur du bleu au rouge
         }));
 
         // Créer le graphique avec Chart.js
