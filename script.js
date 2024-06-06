@@ -1,5 +1,5 @@
 // Chargement des données CSV
-fetch('donnees_temperature.csv')
+fetch('meteo.csv')
     .then(response => response.text())
     .then(data => {
         // Diviser les lignes du fichier CSV
