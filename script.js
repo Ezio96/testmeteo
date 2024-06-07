@@ -24,53 +24,23 @@ async function fetchWeatherData() {
     }
 }
 
-async function createChart() {
+async function displayWeatherData() {
     const weatherData = await fetchWeatherData();
     if (weatherData.length === 0) {
         console.error('No weather data available');
         return;
     }
 
-    const ctx = document.getElementById('weatherChart').getContext('2d');
-    
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: weatherData.map(entry => new Date(entry.time)),
-            datasets: [{
-                label: 'Air Temperature (°C)',
-                data: weatherData.map(entry => entry.air_temperature),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                fill: false
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'hour',
-                        tooltipFormat: 'll HH:mm',
-                        displayFormats: {
-                            hour: 'HH:mm'
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Time'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Air Temperature (°C)'
-                    }
-                }
-            }
-        }
+    const weatherDataContainer = document.getElementById('weatherData');
+    weatherDataContainer.innerHTML = '<h2>Weather Data</h2>';
+
+    weatherData.forEach(entry => {
+        const time = new Date(entry.time);
+        const temperature = entry.air_temperature.toFixed(1);
+        const paragraph = document.createElement('p');
+        paragraph.textContent = `${time.toLocaleString()}: ${temperature}°C`;
+        weatherDataContainer.appendChild(paragraph);
     });
 }
 
-createChart();
+displayWeatherData();
