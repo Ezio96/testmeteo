@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Data</title>
+    <title>Weather Data Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
 </head>
 <body>
-    <h1>Weather Data</h1>
-    <div id="weatherData"></div>
+    <h1>Weather Data Chart</h1>
+    <canvas id="weatherChart" width="800" height="400"></canvas>
     <script src="script.js"></script>
 </body>
 </html>
