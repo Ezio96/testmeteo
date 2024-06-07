@@ -1,51 +1,63 @@
-// Générer des données aléatoires avec des couleurs
-const randomData = Array.from({ length: 50 }, () => {
-    const x = Math.random() * 10;
-    const y = Math.random() * 10;
-    return {
-        x: x,
-        y: y,
-        backgroundColor: x > 5 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)' // Vert si x > 5, Rouge si x <= 5
-    };
-});
+async function fetchWeatherData() {
+    const url = 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=48.8566&lon=2.3522';
 
-// Créer le graphique avec Chart.js
-const ctx = document.getElementById('randomChart').getContext('2d');
-new Chart(ctx, {
-    type: 'scatter',
-    data: {
-        datasets: [{
-            label: 'Points aléatoires',
-            data: randomData,
-            backgroundColor: randomData.map(data => data.backgroundColor), // Couleur des points dynamique
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-            pointStyle: 'circle', // Forme des points
-            pointRadius: 10 // Taille des points
-        }]
-    },
-    options: {
-        scales: {
-            x: {
-                type: 'linear',
-                position: 'bottom',
-                min: 0,
-                max: 10
-            },
-            y: {
-                type: 'linear',
-                min: 0,
-                max: 10
-            }
+    const response = await fetch(url, {
+        headers: {
+            'User-Agent': 'YourAppName/1.0 (your.email@example.com)',
+            'Accept': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        console.error('Failed to fetch data:', response.statusText);
+        return [];
+    }
+
+    const data = await response.json();
+    return data.properties.timeseries.slice(0, 20).map(entry => ({
+        time: entry.time,
+        air_temperature: entry.data.instant.details.air_temperature
+    }));
+}
+
+async function createChart() {
+    const weatherData = await fetchWeatherData();
+    const ctx = document.getElementById('weatherChart').getContext('2d');
+
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: weatherData.map(entry => entry.time),
+            datasets: [{
+                label: 'Air Temperature (°C)',
+                data: weatherData.map(entry => entry.air_temperature),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: false
+            }]
         },
-        plugins: {
-            legend: {
-                labels: {
-                    font: {
-                        size: 48 // Taille de police de la légende
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'hour'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Air Temperature (°C)'
                     }
                 }
             }
         }
-    }
-});
+    });
+}
+
+createChart();
