@@ -19,21 +19,51 @@ async function fetchWeatherDataFromCSV() {
     return weatherData;
 }
 
-async function displayWeatherData() {
+async function createChart() {
     const weatherData = await fetchWeatherDataFromCSV();
     if (weatherData.length === 0) {
         console.error('No weather data available');
         return;
     }
 
-    const weatherDataContainer = document.getElementById('weatherData');
-    weatherDataContainer.innerHTML = '<h2>Weather Data</h2>';
+    const labels = weatherData.map(entry => entry.date);
+    const data = weatherData.map(entry => entry.temperature);
 
-    weatherData.forEach(entry => {
-        const paragraph = document.createElement('p');
-        paragraph.textContent = `Date: ${entry.date}, Temperature: ${entry.temperature}°C`;
-        weatherDataContainer.appendChild(paragraph);
+    const ctx = document.getElementById('weatherChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Temperature (°C)',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        tooltipFormat: 'MMM D, YYYY'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Temperature (°C)'
+                    }
+                }
+            }
+        }
     });
 }
 
-displayWeatherData();
+createChart();
