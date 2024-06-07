@@ -1,31 +1,26 @@
-async function fetchWeatherData() {
-    const url = 'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=48.8566&lon=2.3522';
+async function fetchWeatherDataFromCSV() {
+    const response = await fetch('meteo.csv');
+    const data = await response.text();
 
-    try {
-        const response = await fetch(url, {
-            headers: {
-                'User-Agent': 'YourAppName/1.0 (your.email@example.com)',
-                'Accept': 'application/json'
-            }
-        });
+    // Parse CSV data
+    const rows = data.split('\n');
+    const weatherData = [];
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    for (let i = 1; i < rows.length; i++) { // Start from index 1 to skip header row
+        const columns = rows[i].split(',');
+        if (columns.length >= 2) {
+            weatherData.push({
+                date: columns[0],
+                temperature: parseFloat(columns[1])
+            });
         }
-
-        const data = await response.json();
-        return data.properties.timeseries.slice(0, 20).map(entry => ({
-            time: new Date(entry.time),
-            air_temperature: entry.data.instant.details.air_temperature
-        }));
-    } catch (error) {
-        console.error('Failed to fetch data:', error);
-        return [];
     }
+
+    return weatherData;
 }
 
 async function displayWeatherData() {
-    const weatherData = await fetchWeatherData();
+    const weatherData = await fetchWeatherDataFromCSV();
     if (weatherData.length === 0) {
         console.error('No weather data available');
         return;
@@ -35,10 +30,8 @@ async function displayWeatherData() {
     weatherDataContainer.innerHTML = '<h2>Weather Data</h2>';
 
     weatherData.forEach(entry => {
-        const time = entry.time.toLocaleString();
-        const temperature = entry.air_temperature.toFixed(1);
         const paragraph = document.createElement('p');
-        paragraph.textContent = `Time: ${time}, Temperature: ${temperature}°C`;
+        paragraph.textContent = `Date: ${entry.date}, Temperature: ${entry.temperature}°C`;
         weatherDataContainer.appendChild(paragraph);
     });
 }
