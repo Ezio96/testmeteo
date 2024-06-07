@@ -1,46 +1,50 @@
-const temperatureData = [
-    { date: '2010-01-01', temperature: 2.3 },
-    { date: '2010-01-02', temperature: 1.8 },
-    { date: '2010-01-03', temperature: 1.2 },
-    { date: '2010-01-04', temperature: 2.3 },
-    { date: '2010-01-05', temperature: 1.8 },
-    { date: '2010-01-06', temperature: 1.2 },
-    { date: '2010-01-07', temperature: 2.3 },
-    { date: '2010-01-08', temperature: 1.8 },
-    { date: '2010-01-09', temperature: 5.2 },
-    { date: '2010-01-10', temperature: 2.3 },
-    { date: '2010-01-11', temperature: 4.8 },
-    { date: '2010-01-12', temperature: 4.2 },
-    { date: '2010-01-13', temperature: 6.3 },
-    { date: '2010-01-14', temperature: 2.8 },
-    { date: '2010-01-15', temperature: 7.2 },
-    // Ajoutez les autres données ici...
-];
+// Générer des données aléatoires avec des couleurs
+const randomData = Array.from({ length: 50 }, () => {
+    const x = Math.random() * 10;
+    const y = Math.random() * 10;
+    return {
+        x: x,
+        y: y,
+        backgroundColor: x > 5 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)' // Vert si x > 5, Rouge si x <= 5
+    };
+});
 
 // Créer le graphique avec Chart.js
-const ctx = document.getElementById('temperatureChart').getContext('2d');
+const ctx = document.getElementById('randomChart').getContext('2d');
 new Chart(ctx, {
-    type: 'line',
+    type: 'scatter',
     data: {
-        labels: temperatureData.map(data => data.date),
         datasets: [{
-            label: 'Température (°C)',
-            data: temperatureData.map(data => data.temperature),
+            label: 'Points aléatoires',
+            data: randomData,
+            backgroundColor: randomData.map(data => data.backgroundColor), // Couleur des points dynamique
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
-            fill: false
+            pointStyle: 'circle', // Forme des points
+            pointRadius: 10 // Taille des points
         }]
     },
     options: {
         scales: {
             x: {
-                type: 'time',
-                time: {
-                    unit: 'day'
-                }
+                type: 'linear',
+                position: 'bottom',
+                min: 0,
+                max: 10
             },
             y: {
-                beginAtZero: true
+                type: 'linear',
+                min: 0,
+                max: 10
+            }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    font: {
+                        size: 48 // Taille de police de la légende
+                    }
+                }
             }
         }
     }
