@@ -14,11 +14,15 @@
 
     <script>
         // Générer des données aléatoires avec des couleurs
-        const randomData = Array.from({ length: 50 }, () => ({
-            x: Math.random() * 10,
-            y: Math.random() * 10,
-            color: `rgba(${255 - Math.floor(Math.abs(10 - Math.random() * 20) * 25.5)}, 0, ${Math.floor(Math.abs(10 - Math.random() * 20) * 25.5)}, 1)` // Variation de couleur du rouge au bleu en fonction de l'abscisse
-        }));
+        const randomData = Array.from({ length: 50 }, () => {
+            const x = Math.random() * 10;
+            const y = Math.random() * 10;
+            return {
+                x: x,
+                y: y,
+                backgroundColor: x > 5 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)' // Vert si x > 5, Rouge si x <= 5
+            };
+        });
 
         // Créer le graphique avec Chart.js
         const ctx = document.getElementById('randomChart').getContext('2d');
@@ -28,7 +32,7 @@
                 datasets: [{
                     label: 'Points aléatoires',
                     data: randomData,
-                    backgroundColor: randomData.map(data => data.color), // Couleur des points dynamique
+                    backgroundColor: randomData.map(data => data.backgroundColor), // Couleur des points dynamique
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
                     pointStyle: 'circle', // Forme des points
