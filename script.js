@@ -30,7 +30,7 @@ async function createChart() {
     const data = weatherData.map(entry => entry.temperature);
 
     const ctx = document.getElementById('weatherChart').getContext('2d');
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -63,6 +63,21 @@ async function createChart() {
                 }
             }
         }
+    });
+
+    document.getElementById('downloadPdf').addEventListener('click', function() {
+        const canvas = document.getElementById('weatherChart');
+        const imgData = canvas.toDataURL('image/png');
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        // Calculate width and height to fit A4 page
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('weather_chart.pdf');
     });
 }
 
