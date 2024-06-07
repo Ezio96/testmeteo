@@ -15,7 +15,7 @@ async function fetchWeatherData() {
 
         const data = await response.json();
         return data.properties.timeseries.slice(0, 20).map(entry => ({
-            time: entry.time,
+            time: new Date(entry.time),
             air_temperature: entry.data.instant.details.air_temperature
         }));
     } catch (error) {
@@ -24,23 +24,52 @@ async function fetchWeatherData() {
     }
 }
 
-async function displayWeatherData() {
+async function createChart() {
     const weatherData = await fetchWeatherData();
     if (weatherData.length === 0) {
         console.error('No weather data available');
         return;
     }
 
-    const weatherDataContainer = document.getElementById('weatherData');
-    weatherDataContainer.innerHTML = '<h2>Weather Data</h2>';
+    const chartData = {
+        labels: weatherData.map(entry => entry.time.toLocaleString()),
+        datasets: [{
+            label: 'Air Temperature (°C)',
+            data: weatherData.map(entry => entry.air_temperature),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
 
-    weatherData.forEach(entry => {
-        const time = new Date(entry.time);
-        const temperature = entry.air_temperature.toFixed(1);
-        const paragraph = document.createElement('p');
-        paragraph.textContent = `${time.toLocaleString()}: ${temperature}°C`;
-        weatherDataContainer.appendChild(paragraph);
+    const ctx = document.getElementById('weatherChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'hour',
+                        displayFormats: {
+                            hour: 'MMM D, HH:mm'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Air Temperature (°C)'
+                    }
+                }
+            }
+        }
     });
 }
 
-displayWeatherData();
+createChart();
