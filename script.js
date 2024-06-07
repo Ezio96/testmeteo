@@ -60,7 +60,9 @@ async function createChart() {
                         unit: 'hour',
                         displayFormats: {
                             hour: 'MMM D, HH:mm'
-                        }
+                        },
+                        parser: 'MMM D, HH:mm',
+                        tooltipFormat: 'MMM D, HH:mm'
                     },
                     title: {
                         display: true,
